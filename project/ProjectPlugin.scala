@@ -93,6 +93,7 @@ object ProjectPlugin extends AutoPlugin {
       scalaVersion := scalac.`2.12`,
       crossScalaVersions := "2.11.11" :: scalac.crossScalaVersions,
       scalacOptions ~= (_ filterNot Set("-Xlint").contains),
+      scalacOptions += "-Ypartial-unification",
       orgGithubTokenSetting := "GITHUB4S_ACCESS_TOKEN",
       orgBadgeListSetting := List(
         TravisBadge.apply(_),
