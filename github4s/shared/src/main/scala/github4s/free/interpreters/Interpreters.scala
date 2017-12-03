@@ -298,6 +298,8 @@ class Interpreters[M[_], C](
         fa match {
           case ListPullRequests(owner, repo, filters, accessToken) ⇒
             pullRequests.list(accessToken, headers, owner, repo, filters)
+          case GetSinglePullRequest(owner, repo, prNumber, accessToken) =>
+            pullRequests.getSinglePr(accessToken, headers, owner, repo, prNumber)
           case ListPullRequestFiles(owner, repo, number, accessToken) ⇒
             pullRequests.listFiles(accessToken, headers, owner, repo, number)
           case CreatePullRequest(

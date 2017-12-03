@@ -20,7 +20,6 @@ import github4s.GithubResponses.GHResponse
 import github4s.free.domain._
 import github4s.free.interpreters.Capture
 import github4s.{Decoders, Encoders, GithubApiUrls, HttpClient, HttpRequestBuilderExtension}
-import github4s.util.URLEncoder
 import io.circe.generic.auto._
 import io.circe.syntax._
 
@@ -66,6 +65,19 @@ class PullRequests[C, M[_]](
       s"repos/$owner/$repo/pulls",
       headers,
       filters.map(_.tupled).toMap)
+
+  def getSinglePr(
+    accessToken: Option[String] = None,
+    headers: Map[String, String] = Map(),
+    owner: String,
+    repo: String,
+    prNumber: Int
+  ): M[GHResponse[PullRequest]] =
+    httpClient.get[PullRequest](
+      accessToken,
+      s"repos/$owner/$repo/pulls/$prNumber",
+      headers
+    )
 
   /**
    * List files for a specific pull request

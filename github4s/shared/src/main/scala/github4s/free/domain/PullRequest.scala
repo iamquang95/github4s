@@ -31,7 +31,10 @@ case class PullRequest(
     base: Option[PullRequestBase],
     head: Option[PullRequestBase],
     user: Option[User],
-    assignee: Option[User])
+    assignee: Option[User],
+    comments: Option[Int],
+    additions: Option[Int],
+    deletions: Option[Int])
 
 case class PullRequestBase(
     label: Option[String],

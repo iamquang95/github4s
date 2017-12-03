@@ -33,6 +33,13 @@ final case class ListPullRequests(
     accessToken: Option[String] = None
 ) extends PullRequestOp[GHResponse[List[PullRequest]]]
 
+final case class GetSinglePullRequest(
+  owner: String,
+  repo: String,
+  prNumber: Int,
+  accessToken: Option[String] = None
+) extends PullRequestOp[GHResponse[PullRequest]]
+
 final case class ListPullRequestFiles(
     owner: String,
     repo: String,
@@ -78,6 +85,14 @@ class PullRequestOps[F[_]](implicit I: InjectK[PullRequestOp, F]) {
       accessToken: Option[String] = None
   ): Free[F, GHResponse[List[PullRequest]]] =
     Free.inject[PullRequestOp, F](ListPullRequests(owner, repo, filters, accessToken))
+
+  def getSinglePullRequest(
+    owner: String,
+    repo: String,
+    prNumber: Int,
+    accessToken: Option[String] = None
+  ): Free[F, GHResponse[PullRequest]] =
+    Free.inject[PullRequestOp, F](GetSinglePullRequest(owner, repo, prNumber, accessToken))
 
   def listPullRequestFiles(
       owner: String,

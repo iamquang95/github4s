@@ -323,6 +323,13 @@ class GHPullRequests(accessToken: Option[String] = None)(implicit O: PullRequest
   ): GHIO[GHResponse[List[PullRequest]]] =
     O.listPullRequests(owner, repo, filters, accessToken)
 
+  def getSinglePr(
+    owner: String,
+    repo: String,
+    prNumber: Int
+  ): GHIO[GHResponse[PullRequest]] =
+    O.getSinglePullRequest(owner, repo, prNumber, accessToken)
+
   def listFiles(
       owner: String,
       repo: String,
